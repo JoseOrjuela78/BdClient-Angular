@@ -1,0 +1,53 @@
+<div class="m-3 fadeIn animated">
+
+    <hr>
+    <form (ngSubmit)="EstadoUp(h)" #h="ngForm">
+
+        <div id="users">
+            <div class="row">
+                <div class="col-12">
+                    <h3>Estados</h3>
+                </div>
+
+            </div>
+            <div class="row p-1">
+                <div class="col-2">
+                    <div class="form-group">
+                        <label for="estadoId">Consecutivo :</label>
+                        <input type="text" class="form-control" id="estadoId" [(ngModel)]="estado.estadoId" name="estadoId" (blur)="BuscarEstado(estado.estadoId)">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="nombreEstado">Descripción Estado :</label>
+                        <input type="text" class="form-control" id="nombreEstado" [(ngModel)]="estado.nombreEstado" name="nombreEstado" required>
+                        <small *ngIf="h.submitted && h.controls['nombreEstado'].errors" id="emailHelp" class="form-text text-danger animated fadeIn">**ingresa Estado</small>
+                    </div>
+                </div>
+                <div class="col-2 mt-4 p-2">
+
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="customSwitch3" [(ngModel)]="estado.estadoActivo" name="estadoActivo" (click)="CambioNombre(!estado.estadoActivo)">
+                        <label class="custom-control-label" for="customSwitch3">{{nombreEstadoActivo}}</label>
+                    </div>
+
+                </div>
+                <div class="col-1 mt-4 pt-2">
+                    <div *ngIf="activated" class="btn-group mybtn" role="group" aria-label="Third group">
+                        <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter">Save</button>
+                    </div>
+                    <div *ngIf="!activated" class="btn-group mybtn" role="group" aria-label="Third group">
+                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenter" (click)="ActualizarEstado(h)">Update</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row pl-1">
+                <div class="col-3">
+                    <a type="button" (click)="downloadEstados()">Download Listado Estados</a>
+                </div>
+            </div>
+
+        </div>
+    </form>
+    <hr>
+</div>

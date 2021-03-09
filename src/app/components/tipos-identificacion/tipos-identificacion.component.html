@@ -1,0 +1,53 @@
+<div class="m-3 fadeIn animated">
+
+    <hr>
+    <form (ngSubmit)="TipoIdUp(h)" #h="ngForm">
+
+        <div id="users">
+            <div class="row">
+                <div class="col-12">
+                    <h3>Tipos Identificación</h3>
+                </div>
+
+            </div>
+            <div class="row p-1">
+                <div class="col-2">
+                    <div class="form-group">
+                        <label for="tipoId">Tipo Id:</label>
+                        <input type="text" class="form-control" id="tipoId" [(ngModel)]="tipoIdentificacion.tipoId" name="tipoId" (blur)="BuscarTipoIdentificacion(tipoIdentificacion.tipoId)">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="tipoDocumento">Descripción :</label>
+                        <input type="text" class="form-control" id="tipoDocumento" [(ngModel)]="tipoIdentificacion.tipoDocumento" name="tipoDocumento" required>
+                        <small *ngIf="h.submitted && h.controls['tipoDocumento'].errors" id="emailHelp" class="form-text text-danger animated fadeIn">**ingresa Nombre Ejecutivo</small>
+                    </div>
+                </div>
+                <div class="col-2 mt-4 p-2">
+
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="customSwitch3" [(ngModel)]="tipoIdentificacion.estadotipoDocumento" name="estadotipoDocumento" (click)="CambioNombre(!tipoIdentificacion.estadotipoDocumento)">
+                        <label class="custom-control-label" for="customSwitch3">{{nombreEstadoTipoId}}</label>
+                    </div>
+
+                </div>
+                <div class="col-1 mt-4 pt-2">
+                    <div *ngIf="activated" class="btn-group mybtn" role="group" aria-label="Third group">
+                        <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter">Save</button>
+                    </div>
+                    <div *ngIf="!activated" class="btn-group mybtn" role="group" aria-label="Third group">
+                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenter" (click)="ActualizarTipoId(h)">Update</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row pl-1">
+                <div class="col-6">
+                    <a type="button" (click)="downloadTipoId()">Download Listado Tipos Identificación</a>
+                </div>
+            </div>
+
+        </div>
+    </form>
+    <hr>
+</div>

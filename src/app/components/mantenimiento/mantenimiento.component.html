@@ -1,0 +1,35 @@
+<div class="container w-50 mt-1">
+    <form class="myForm5" #d="ngForm">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <button class="btn btn-outline-danger dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Choose Action</button>
+                <div class="dropdown-menu">
+
+                    <a class="dropdown-item" routerLink="tiposIdentificacion" (click)="Asignar('Tipos Identificación')">Tipos Identificación</a>
+                    <div role="separator" class="dropdown-divider"></div>
+                    <a class="dropdown-item" routerLink="cargos" (click)="Asignar('Cargos')">Cargos</a>
+                    <div role="separator" class="dropdown-divider"></div>
+                    <a class="dropdown-item" routerLink="tiposSolicitud" (click)="Asignar('Tipos Solicitud')">Tipos Solicitud</a>
+                    <div role="separator" class="dropdown-divider"></div>
+                    <a class="dropdown-item" routerLink="causales" (click)="Asignar('Causales')">Causales</a>
+                    <div role="separator" class="dropdown-divider"></div>
+                    <a class="dropdown-item" routerLink="estados" (click)="Asignar('Estados')">Estados</a>
+                    <div role="separator" class="dropdown-divider"></div>
+                    <a class="dropdown-item" routerLink="ejecutivos" (click)="Asignar('Ejecutivos')">Ejecutivos</a>
+                    <div role="separator" class="dropdown-divider"></div>
+                    <a class="dropdown-item" routerLink="ciudades" (click)="Asignar('Ciudades')">Ciudades</a>
+                    <div role="separator" class="dropdown-divider"></div>
+                    <a class="dropdown-item" routerLink="cargaMasiva" (click)="Asignar('Carga Masiva')">Carga Masiva</a>
+
+
+
+                </div>
+            </div>
+            <input type="text" [(ngModel)]="choose" name="choose" class="form-control" aria-label="Text input with dropdown button">
+        </div>
+    </form>
+</div>
+
+<div>
+    <router-outlet></router-outlet>
+</div>

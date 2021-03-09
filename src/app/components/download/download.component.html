@@ -1,0 +1,26 @@
+<div style="text-align:center">
+
+
+    <h2 class="m-5">Clic descarga para iniciar :</h2>
+
+    <div class="container w-50">
+        <form class="myForm5" #d="ngForm">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <button type="button" class="btn btn-outline-danger">Descarga</button>
+                    <button type="button" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" (click)="Asignar('Usuarios')">Usuarios</a>
+                        <a class="dropdown-item" (click)="Asignar('Contrapartes')">Contrapartes</a>
+                        <a class="dropdown-item" (click)="Asignar('Representantes')">Representantes</a>
+                        <a class="dropdown-item" (click)="Asignar('Solicitudes')">Solicitudes</a>
+                    </div>
+                </div>
+                <input type="text" [(ngModel)]="descarga" name="descarga" class="form-control" aria-label="Text input with segmented dropdown button">
+            </div>
+        </form>
+    </div>
+
+</div>

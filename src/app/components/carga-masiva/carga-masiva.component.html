@@ -1,0 +1,44 @@
+<div class="container w-75 mt-5">
+    <hr>
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <button type="button" class="btn btn-outline-primary">Choose Table</button>
+            <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" *ngFor="let item of tipos" (click)="onTipo(item)">{{item}}</a>
+            </div>
+        </div>
+        <div class="custom-file" *ngIf="this.browser">
+            <input type="file" class="custom-file-input" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" (change)="onFileChange($event)">
+            <label class="custom-file-label" for="inputGroupFile04">{{tipo}}</label>
+        </div>
+
+    </div>
+    <div class="container" *ngIf="this.size > 0">
+        <table class="table table-hover table-light  mt-1">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Size</th>
+                    <th scope="col">Modified</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">{{name}}</th>
+                    <td>{{size | number}} KB</td>
+                    <td>{{lastModified | date}}</td>
+                    <td>
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-success" type="button" id="inputGroupFileAddon04" (click)="onUpload()">Send</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <hr>
+</div>

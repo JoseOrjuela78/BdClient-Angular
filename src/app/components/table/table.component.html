@@ -1,0 +1,67 @@
+<div class="container-fluid">
+    <div class="container">
+        <form class="formUK" (ngSubmit)="vinculosUp(v)" #v="ngForm">
+            <h3>{{this.title}}</h3>
+
+            <hr>
+
+            <div class="row">
+                <div class="col-3">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Id Contraparte</label>
+                        <input [(ngModel)]="termino" name="termino" (blur)="buscarTermino(this.termino)" type="search" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    </div>
+                </div>
+                <div class="col-5">
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Contraparte </label>
+                        <input [(ngModel)]="RazonSocial" name="RazonSocial" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" readonly>
+                    </div>
+
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Cargo</label>
+                        <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="representante.cargos" name="cargos" required>
+                      <option *ngFor="let item of cargos" [value]="item.cargoId">{{item.nombreCargo}}</option>
+                   
+                      </select>
+                    </div>
+
+                </div>
+                <div class="col-1 my-4 p-2">
+                    <button type="submit" class="btn btn-danger">Add</button>
+                </div>
+            </div>
+
+            <div class="row ml-5 mr-5 mt-0">
+                <table class="table table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">N. Documento</th>
+                            <th scope="col">Contraparte</th>
+                            <th scope="col">Cargo</th>
+                            <th scope="col">Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of vinculos">
+                            <th scope="row">{{item.contNumeroIdentificacion}}</th>
+                            <td>{{item.contNombre}}</td>
+                            <td>{{item.nombreCargo}}</td>
+
+                            <td>
+                                <button type="button" class="btn btn-outline-danger" (click)="eliminarRepresentante(item.idRepresentante)">X</button>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+
+            </div>
+        </form>
+    </div>
+
+</div>

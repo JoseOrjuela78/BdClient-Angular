@@ -1,0 +1,6 @@
+#ventana {
+    position: absolute;
+    width: 30%;
+    opacity: 2;
+    z-index: 2;
+}

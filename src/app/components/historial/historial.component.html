@@ -1,0 +1,67 @@
+<div class="m-3">
+    <div class="row ml-0">
+        <div class="col-2">
+            <div class="btn-group" role="group" aria-label="Third group">
+                <button type="button" class="btn btn-primary homeLink" data-target="#exampleModalCenter" routerLink="/home/false/contrapartes">Contrapartes</button>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="btn-group" role="group" aria-label="Third group">
+                <button type="button" class="btn btn-primary homeLink" data-toggle="modal" data-target="#exampleModalCenter" (click)="abrirSolicitud('')">Crear Nueva</button>
+            </div>
+        </div>
+
+    </div>
+    <div class="row mt-3">
+        <form class="formUK">
+            <h3>HISTORIAL : {{nitContraparte}} {{nombreContraparte}}</h3>
+            <table class="table table-hover">
+                <thead class="thead-dark">
+                    <tr class="text-center">
+                        <th *ngFor="let title of titles" scope="col">{{title}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of segmento">
+                        <th scope="row">{{item.soliFecha|date:'shortDate'}}</th>
+                        <td>{{item.soliConsecutivo}}</td>
+                        <td>{{item.nombreSolicitud}}</td>
+                        <td>{{item.nombreEjecutivo}}</td>
+                        <td>{{item.soliCupoActual}}</td>
+                        <td>{{item.soliCupoSolicitado}}</td>
+                        <td>{{item.soliCupoAprobado}}</td>
+                        <td>{{item.nombreEstado}}</td>
+                        <td>{{item.nombreCausal}}</td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Third group">
+                                <button type="button" class="btn btn-primary m-1" data-toggle="modal" data-target="#exampleModalCenter" (click)="abrirSolicitud(item.soliConsecutivo)"><img src="../../../assets/img/pen.jpg" alt="Editar" height="32" width="32"></button>
+                                <button type="button" class="btn btn-danger m-1" (click)="eliminaSolicitud(item.soliConsecutivo)"><img src="../../../assets/img/icons8-eliminar-64.png" alt="Borrar" height="32" width="32"></button>
+                            </div>
+                        </td>
+                    </tr>
+
+
+                </tbody>
+            </table>
+            <h4 *ngIf="lector" class="m-3">Mostrando {{mostrando}} de {{totalSolicitudes}} ...
+                <button *ngIf="btnBack" type="button" class="btn  m-1" data-toggle="modal" data-target="#exampleModalCenter" (click)="retroceder()"><img src="../../../assets/img/left-arrow.png" alt="Retreceder" height="32" width="32"></button>
+                <button *ngIf="btnUp" type="button" class="btn m-1" data-toggle="modal" data-target="#exampleModalCenter" (click)="avanzar()"><img src="../../../assets/img/right-arrow.png" alt="Avanzar" height="32" width="32"></button>
+            </h4>
+        </form>
+    </div>
+
+
+</div>
+
+
+<div *ngIf="this.solicitud" id="solicitud2" class="p-1 ">
+    <app-solicitudes [solicitudId]="solicitudId" [contraparteId]="contraparteId" [razonSocialId]="nombreContraparte"></app-solicitudes>
+
+    <div id="btnCerrarSolicitud">
+        <div class="btn-group ml-3 mt-3 mb-0 " role="group" aria-label="Third group">
+            <button type="button" class="btn btn-outline-danger" (click)="cerrarSolicitud()">Cerrar Solicitud</button>
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,196 @@
+<div class="m-3 formUK">
+
+
+    <form (ngSubmit)="userUp(h)" #h="ngForm">
+
+        <div id="users">
+            <div class="row">
+                <div class="col-11">
+                    <h3>USUARIOS</h3>
+                </div>
+
+                <div class="col-1 p-1 Botones">
+                    <button *ngIf="!estadoUser" type="submit" class="btn" id="guardarUsuario"><img src="../../../assets/img/save.jpg" alt="Guardar" ></button>
+                    <button *ngIf="estadoUser" type="button" (click)="actualizaUser(h)" class="btn" id="guardarUsuario"><img src="../../../assets/img/save.jpg" alt="Guardar" ></button>
+                    <button *ngIf="estadoUser" (click)="eliminaUser()" type="button" class="btn" id="eliminarUsuario"><img src="../../../assets/img/icons8-eliminar-64.png" alt="Borrar"></button>
+                </div>
+
+            </div>
+
+            <div class="row p-1">
+
+
+                <div class="col-3">
+                    <div class="form-group">
+                        <label for="tipoIdentificacion">Tipo Identificación :</label>
+                        <select class="form-control" id="tipoIdentificacion" [(ngModel)]="user.tipoIdentificacion" name="tipoIdentificacion" required>
+                              <option *ngFor="let item of lines" [value]="item.tipoId" selected>{{item.tipoDocumento}}</option>
+                        </select>
+                        <small *ngIf="h.submitted && h.controls['tipoIdentificacion'].errors" id="emailHelp" class="form-text text-danger animated fadeIn">**tipo Documento</small>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-group">
+                        <label for="usuaNumeroIdentificacion">Identificación :</label>
+                        <input type="text" class="form-control" id="usuaNumeroIdentificacion" [(ngModel)]="user.usuaNumeroIdentificacion" name="usuaNumeroIdentificacion" (blur)="obtenerUser(user.usuaNumeroIdentificacion)" required>
+                        <small *ngIf="h.submitted && h.controls['usuaNumeroIdentificacion'].errors" id="emailHelp" class="form-text text-danger animated fadeIn">**ingresa Identificacion</small>
+                    </div>
+                </div>
+
+
+                <div class="col-5">
+                    <div class="form-group">
+                        <label for="usuaRazonSocial">Apellidos y Nombres / Razon Social :</label>
+                        <input type="text" class="form-control" id="usuaRazonSocial" [(ngModel)]="user.usuaRazonSocial" name="usuaRazonSocial" required>
+                        <small *ngIf="h.submitted && h.controls['usuaRazonSocial'].errors" id="emailHelp" class="form-text text-danger animated fadeIn">**ingresa Nombre o Razón Social</small>
+                    </div>
+                </div>
+
+                <div class="col-2" id="compliance">
+                    <button (click)="compliance()" type="button" class="btn" id="compliancebtn"><img src="../../../assets/img/Compliance.PNG" alt="Listas"></button>
+                </div>
+
+            </div>
+
+            <div class="row p-1">
+
+                <div class="col-2 mt-4">
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="customSwitch1" [(ngModel)]="user.escontraparte" name="esContraparte">
+                        <label class="custom-control-label" for="customSwitch1">Contraparte</label>
+                    </div>
+
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="customSwitch2" [(ngModel)]="user.esPEP" name="usuaPEP">
+                        <label class="custom-control-label" for="customSwitch2">PEP</label>
+                    </div>
+                </div>
+
+
+
+
+                <div class="col-5">
+                    <div class="form-group">
+                        <label for="usuaFechaMatricula">Fecha Matricula :</label>
+                        <input type="date" class="form-control" id="usuaFechaMatricula" [(ngModel)]="user.usuaFechaMatricula" name="usuaFechaMatricula">
+                    </div>
+                </div>
+                <div class="col-5">
+                    <div class="form-group">
+                        <label for="usuaFechaNacimiento">Fecha Nacimiento :</label>
+                        <input type="date" class="form-control" id="usuaFechaNacimiento" [(ngModel)]="user.usuaFechaNacimiento" name="usuaFechaNacimiento">
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="user.escontraparte" class="animated fadeIn" id="userAdicionales">
+
+                <div class="row">
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="usuaCIIU">CIIU :</label>
+                            <input type="text" class="form-control" id="usuaCIIU" [(ngModel)]="user.usuaCIIU" name="usuaCIIU">
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="usuaOrden">Nro Orden :</label>
+                            <input type="text" class="form-control" id="usuaOrden" [(ngModel)]="user.usuaOrden" name="usuaOrden">
+                        </div>
+                    </div>
+
+                    <div class="col-2 p-4">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="customSwitch3" [(ngModel)]="user.usuaPagare" name="usuaPagare">
+                            <label class="custom-control-label" for="customSwitch3">Pagare</label>
+                        </div>
+                    </div>
+                    <div class="col-2 p-4">
+
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="customSwitch4" [(ngModel)]="user.usuaCliente" name="usuaCliente">
+                            <label class="custom-control-label" for="customSwitch4">Cliente</label>
+                        </div>
+
+                    </div>
+                    <div class="col-2 p-4">
+
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="customSwitch5" [(ngModel)]="user.usuaProveedor" name="usuaProveedor">
+                            <label class="custom-control-label" for="customSwitch5">Proveedor</label>
+                        </div>
+
+                    </div>
+                    <div class="col-2 p-4">
+
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="customSwitch6" [(ngModel)]="user.usuaEmpleado" name="usuaEmpleado">
+                            <label class="custom-control-label" for="customSwitch6">Empleado</label>
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="departamentos">Departamento :</label>
+                            <select class="form-control" id="departamentos" [(ngModel)]="user.departamento" name="departamento" (blur)="obtenerMunicipios(user.departamento)"> 
+                                <option *ngFor="let item of dptos" value={{item.departamentoId}}>{{item.nombreDepartamento}} (07{{item.indicativo}})</option>
+                        </select>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="municipios">Municipio :</label>
+                            <select class="form-control" id="municipios" [(ngModel)]="user.municipios" name="municipios"> 
+                                <option *ngFor="let item of municipios" value={{item.municipioId}}>{{item.nombreMunicipio}} ({{item.municipioId}})</option>
+                        </select>
+                        </div>
+                    </div>
+
+
+                    <div class="col-4">
+
+                        <div class="form-group">
+                            <label for="usuaMail">Email :</label>
+                            <input type="email" class="form-control" id="usuaMail" [(ngModel)]="user.usuaMail" name="usuaMail">
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-10">
+                    <small *ngIf="h.submitted && h.controls['usuaObservacion'].errors" id="emailHelp" class="form-text text-danger animated fadeIn">**Realice un Comentario</small>
+                    <div class="input-group">
+                        <div class="input-group-prepend ">
+                            <span class="input-group-text comentario">Reporte Listas</span>
+                        </div>
+                        <textarea class="form-control" aria-label="With textarea" id="usuaObservacion" [(ngModel)]="user.usuaObservacion" name="usuaObservacion" required></textarea>
+                    </div>
+                </div>
+                <div class="col-2 mt-2">
+                    <div class="btn-group " role="group" aria-label="Third group">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" (click)="cerrarVentana(h)">Vinculos</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+
+<div *ngIf="this.ventana" id="solicitud2" class="p-1">
+
+    <app-table [user]='user.usuaNumeroIdentificacion'></app-table>
+    <div class="btn-group" role="group" aria-label="Third group">
+        <button type="button" class="btn btn-outline-danger" (click)="cerrarVentana(h)">Cerrar Vinculos</button>
+    </div>
+</div>

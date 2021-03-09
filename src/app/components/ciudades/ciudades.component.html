@@ -1,0 +1,74 @@
+<div class="m-3 fadeIn animated">
+
+    <hr>
+    <form (ngSubmit)="UpCiudad(h)" #h="ngForm">
+
+        <div id="users">
+            <div class="row">
+                <div class="col-12">
+                    <h3>{{this.title}}</h3>
+                </div>
+
+            </div>
+            <div class="row p-1">
+                <div class="col-2">
+                    <div class="form-group">
+                        <label for="idCiudad">Id:</label>
+                        <input type="text" class="form-control" id="idCiudad" [(ngModel)]="ciudad.idCiudad" name="idCiudad" (blur)="BuscarCiudad(ciudad.idCiudad)" required>
+                        <small *ngIf="h.submitted && h.controls['idCiudad'].errors" id="emailHelp" class="form-text text-danger animated fadeIn">**ingresa Id</small>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="nombreCiudad">{{this.title}} :</label>
+                        <input type="text" class="form-control" id="nombreCiudad" [(ngModel)]="ciudad.nombreCiudad" name="nombreCiudad" required>
+                        <small *ngIf="h.submitted && h.controls['nombreCiudad'].errors" id="emailHelp" class="form-text text-danger animated fadeIn">**ingresa Nombre</small>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div *ngIf="this.i === 1" class="form-group">
+                        <label for="indicativoCiudad">Indicativo :</label>
+                        <input type="text" class="form-control" id="indicativoCiudad" [(ngModel)]="ciudad.indicativoCiudad" name="indicativoCiudad" required>
+                        <small *ngIf="h.submitted && h.controls['indicativoCiudad'].errors" id="emailHelp" class="form-text text-danger animated fadeIn">**ingresa Indicativo</small>
+                    </div>
+                    <div *ngIf="this.i != 1" class="form-group">
+                        <label for="indicativoCiudad">Indicativo :</label>
+                        <input type="text" class="form-control" id="indicativoCiudad" [(ngModel)]="ciudad.indicativoCiudad" name="indicativoCiudad" readonly>
+                    </div>
+
+                </div>
+                <div class="col-2 mt-4 p-2">
+
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="customSwitch3" [(ngModel)]="ciudad.ciudadActiva" name="ciudadActiva" (click)="CambioNombre(!ciudad.ciudadActiva)">
+                        <label class="custom-control-label" for="customSwitch3">{{nombreCiudadActiva}}</label>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-1 ml-3">
+                        <div *ngIf="this.activated" class="btn-group mybtn" role="group" aria-label="Third group">
+                            <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter">Save</button>
+                        </div>
+                        <div *ngIf="!this.activated" class="btn-group mybtn" role="group" aria-label="Third group">
+                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenter" (click)="ActualizarPais(h)">Update</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row pl-1">
+                <div class="col-12">
+                    <label>{{this.pais.nombrePais}} => {{this.departamento.nombreDepartamento}} => {{this.municipio.nombreMunicipio}}</label>
+                </div>
+            </div>
+            <div class="row pl-1">
+                <div class="col-6">
+                    <a type="button" (click)="downloadListado()">Download Lista de {{this.title1}}</a>
+                </div>
+
+            </div>
+
+        </div>
+    </form>
+    <hr>
+</div>

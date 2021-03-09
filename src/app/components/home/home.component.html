@@ -1,0 +1,41 @@
+<div class="container-fluid center">
+    <div class="container">
+
+        <ul class="nav nav-tabs homeLink">
+
+            <li class="nav-item" *ngIf="ejecUser=='true'" routerLinkActive="active">
+                <a class="nav-link" routerLink="create">Crear Usuario<span class="sr-only">(current)</span></a>
+            </li>
+
+            <li class="nav-item " *ngIf="ejecUser=='true'" routerLinkActive="active">
+                <a class="nav-link" routerLink="mantenmiento">Mantenimiento</a>
+            </li>
+
+            <li class="nav-item" *ngIf="ejecUser=='false'" routerLinkActive="active">
+                <a class="nav-link" routerLink="usuarios">Usuarios</a>
+            </li>
+
+            <li class="nav-item" *ngIf="ejecUser=='false'" routerLinkActive="active">
+                <a class="nav-link" routerLink="contrapartes">Contrapartes</a>
+            </li>
+            <li class="nav-item" *ngIf="ejecUser=='false'" routerLinkActive="active">
+                <a class="nav-link" routerLink="consultas">Reportes</a>
+            </li>
+
+            <li class="nav-item" *ngIf="ejecUser=='true'" routerLinkActive="active">
+                <a class="nav-link" routerLink="download">Descargas</a>
+            </li>
+            <li class="nav-item" routerLinkActive="active">
+                <a class="nav-link" (click)="salir()"><strong>Salir</strong></a>
+            </li>
+        </ul>
+
+    </div>
+
+    <div class="container">
+
+        <router-outlet></router-outlet>
+
+    </div>
+
+</div>

@@ -1,0 +1,53 @@
+<div class="m-3 fadeIn animated">
+    <hr>
+
+    <form (ngSubmit)="TipoSolicitudUp(h)" #h="ngForm">
+
+        <div id="users">
+            <div class="row">
+                <div class="col-12">
+                    <h3>Tipos de Solicitud</h3>
+                </div>
+
+            </div>
+            <div class="row p-1">
+                <div class="col-2">
+                    <div class="form-group">
+                        <label for="tipoSolicitudId">Consecutivo :</label>
+                        <input type="text" class="form-control" id="tipoSolicitudId" [(ngModel)]="tipoSolicitud.tipoSolicitudId" name="tipoSolicitudId" (blur)="BuscarTipoSolicitud(tipoSolicitud.tipoSolicitudId)">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="nombreSolicitud">Descripción Cargo :</label>
+                        <input type="text" class="form-control" id="nombreSolicitud" [(ngModel)]="tipoSolicitud.nombreSolicitud" name="nombreSolicitud" required>
+                        <small *ngIf="h.submitted && h.controls['nombreSolicitud'].errors" id="emailHelp" class="form-text text-danger animated fadeIn">**ingresa Descripción Solicitud</small>
+                    </div>
+                </div>
+                <div class="col-2 mt-4 p-2">
+
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="customSwitch3" [(ngModel)]="tipoSolicitud.estadoTipoSolicitud" name="estadoTipoSolicitud" (click)="CambioNombre(!tipoSolicitud.estadoTipoSolicitud)">
+                        <label class="custom-control-label" for="customSwitch3">{{nombreEstadoTipoSolicitud}}</label>
+                    </div>
+
+                </div>
+                <div class="col-1 mt-4 pt-2">
+                    <div *ngIf="activated" class="btn-group mybtn" role="group" aria-label="Third group">
+                        <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter">Save</button>
+                    </div>
+                    <div *ngIf="!activated" class="btn-group mybtn" role="group" aria-label="Third group">
+                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenter" (click)="ActualizarTipoSolicitud(h)">Update</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row pl-1">
+                <div class="col-6">
+                    <a type="button" (click)="downloadTiposSolicitud()">Download Listado Tipos Solicitud</a>
+                </div>
+            </div>
+
+        </div>
+    </form>
+    <hr>
+</div>

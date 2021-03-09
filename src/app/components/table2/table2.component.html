@@ -1,0 +1,51 @@
+<div class="mt-10">
+    <form #v="ngForm">
+        <h3>{{this.title}}</h3>
+
+        <hr>
+
+        <div class="row m-1 mt-0">
+            <table class="table table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Revisado</th>
+                        <th scope="col">Identificación</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Cargo</th>
+                        <th scope="col">Comentario</th>
+                        <th scope="col">View</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of vinculos">
+                        <th scope="row">{{item.usuaFechaActualizacion| date:'shortDate'}}</th>
+                        <td>{{item.usuaNumeroIdentificacion}}</td>
+                        <td>{{item.usuaRazonSocial}}</td>
+                        <td>{{item.nombreCargo}}</td>
+                        <td>{{item.usuaObservacion}}</td>
+                        <button type="button" class="btn btn-primary m-1" data-toggle="modal" data-target="#exampleModalCenter" (click)="cerrarVentana(item.usuaNumeroIdentificacion)"><img src="../../../assets/img/pen.jpg" alt="Editar" height="32" width="32"></button>
+                        <td><button type="button" class="btn btn-outline-danger" (click)="eliminarRepresentante(item.idRepresentante)">X</button></td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </form>
+
+</div>
+<div class="col-3">
+    <a type="button" (click)="downloadRepresentantesCon(this.contraparteId)">Download Listado</a>
+</div>
+
+
+<div *ngIf="this.ventana" id="solicitud2" class="p-1">
+
+    <app-users [nit]="this.nit"></app-users>
+
+    <div id="btnCerrarUsers">
+        <div class="btn-group" role="group" aria-label="Third group">
+            <button type="button" class="btn btn-outline-danger" (click)="cerrarVentana('')">Cerrar Usuarios</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,54 @@
+<div class="mt-5 animated fadeIn">
+    <form id="fLogin" (ngSubmit)="onSubmit(f)" #f="ngForm">
+        <div class="titleLogin">
+
+            <h3>Create Account</h3>
+        </div>
+        <hr>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="email" class="form-control" [(ngModel)]="usuario.email" name="email" id="exampleInputEmail1" aria-describedby="emailHelp" required email>
+            <small *ngIf="f.submitted && f.controls['email'].errors" id="emailHelp" class="form-text text-danger animated fadeIn">**El email es obligatorio</small>
+        </div>
+        <div class="form-group">
+            <label for="exampleInput">Apellidos y Nombres</label>
+            <input type="text" class="form-control" [(ngModel)]="usuario.nombre" name="nombre" minlength="2" id="exampleInput" required>
+            <small *ngIf="f.submitted && f.controls['nombre'].errors" id="emailHelp" class="form-text text-danger animated fadeIn">**El nombre es obligatorio</small>
+        </div>
+        <div class="form-group">
+            <label for="exampleInput">Identificación</label>
+            <input type="text" class="form-control" [(ngModel)]="usuario.identificacion" name="identificacion" minlength="2" id="exampleInput" required>
+            <small *ngIf="f.submitted && f.controls['identificacion'].errors" id="emailHelp" class="form-text text-danger animated fadeIn">**Nro Identificacion obligatorio</small>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input type="password" class="form-control" [(ngModel)]="usuario.password" name="password" minlength="6" id="exampleInputPassword1" required>
+                    <small *ngIf="f.submitted && f.controls['password'].errors" id="emailHelp" class="form-text text-danger animated fadeIn">**Paswword minimo 6 caracteres</small>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Perfil</label>
+                    <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="usuario.role" name="role" required>
+                      <option>USER_ROLE</option>
+                      <option>ADMIN_ROLE</option>
+                      <option>EJEC_ROLE</option>
+                      
+                    </select>
+                    <small *ngIf="f.submitted && f.controls['role'].errors" id="emailHelp" class="form-text text-danger animated fadeIn">**Perfil requrido</small>
+                </div>
+            </div>
+
+        </div>
+        <div class="row align-content-sm-center">
+            <div class="col-12 text-center">
+                <a routerLink="/login">Go to Login</a>
+            </div>
+        </div>
+        <hr>
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Create</button>
+    </form>
+</div>

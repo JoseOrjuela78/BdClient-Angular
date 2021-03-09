@@ -1,0 +1,180 @@
+<div class="m-3">
+    <form class="formUK" (ngSubmit)="solicitudUp(s)" #s="ngForm">
+        <div id="solicitud">
+            <div class="row">
+                <div class="col-11">
+                    <h3>Solicitud: {{consecutivo}} {{razonSocial}} {{nit}}</h3>
+                </div>
+                <div class="col-1 p-1">
+                    <button *ngIf="estadoUser" type="submit" class="btn" id="guardarSolicitud"><img src="../../../assets/img/save.jpg" alt="Guardar" height="32" width="32"></button>
+                    <button *ngIf="!estadoUser" type="button" class="btn" id="editarSolicitud" (click)="actualizaSolicitud(s)"><img src="../../../assets/img/save.jpg" alt="Actualizar" height="32" width="32"></button>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-3">
+                    <div class="form-group">
+                        <label for="IdEjecutivo">Ejecutivo :</label>
+                        <select class="form-control" id="IdEjecutivo" [(ngModel)]="solicitud.IdEjecutivo" name="IdEjecutivo" required>
+                            <option *ngFor="let item of ejecutivos" [value]="item.ejecutivoId" selected>{{item.nombreEjecutivo}}</option>
+                       </select>
+                        <small *ngIf="s.submitted && s.controls['IdEjecutivo'].errors" id="emailHelp" class="form-text text-danger animated fadeIn">**Debe escoger ejecutivo</small>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <label for="idSolicitud">Tipo Solicitud :</label>
+                        <select class="form-control" id="idSolicitud" [(ngModel)]="solicitud.IdSolicitud" name="IdSolicitud" required>
+                            <option *ngFor="let item of tiposSolicitud" [value]="item.tipoSolicitudId" selected>{{item.nombreSolicitud}}</option>
+                        </select>
+                        <small *ngIf="s.submitted && s.controls['IdEjecutivo'].errors" id="emailHelp" class="form-text text-danger animated fadeIn">**Debe escoger tipo solicitud</small>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <label for="soliFechaExpedicionCcio">Expedición CCIO :</label>
+                        <input type="date" class="form-control" id="soliFechaExpedicionCcio" [(ngModel)]="solicitud.soliFechaExpedicionCcio" name="soliFechaExpedicionCcio">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <label for="soliAnoRenovado">Año Renovado :</label>
+                        <input type="number" class="form-control" id="soliAnoRenovado" [(ngModel)]="solicitud.soliAnoRenovado" name="soliAnoRenovado">
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="soliCupoActual">Cupo Actual :</label>
+                        <input type="text" class="form-control" id="soliCupoActual" [(ngModel)]="solicitud.soliCupoActual" name="soliCupoActual">
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="soliCupoSolicitado">Cupo Solicitado :</label>
+                        <input type="text" class="form-control" id="soliCupoSolicitado" [(ngModel)]="solicitud.soliCupoSolicitado" name="soliCupoSolicitado">
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="soliFechaRadicacion">Fecha Radicación :</label>
+                        <input type="date" class="form-control" id="soliFechaRadicacion" [(ngModel)]="solicitud.soliFechaRadicacion" name="soliFechaRadicacion">
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="soliFechaSolucion">Fecha Solución :</label>
+                        <input type="date" class="form-control" id="soliFechaSolucion" [(ngModel)]="solicitud.soliFechaSolucion" name="soliFechaSolucion">
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="soliCupoAprobado">Cupo Aprobado :</label>
+                        <input type="text" class="form-control" id="soliCupoAprobado" [(ngModel)]="solicitud.soliCupoAprobado" name="soliCupoAprobado">
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="soliCupoAsignado">Cupo Asignado :</label>
+                        <input type="text" class="form-control" id="soliCupoAsignado" [(ngModel)]="solicitud.soliCupoAsignado" name="soliCupoAsignado">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="soliFechaEnvioPagare">Fecha Envio Pagaré :</label>
+                        <input type="date" class="form-control" id="soliFechaEnvioPagare" [(ngModel)]="solicitud.soliFechaEnvioPagare" name="soliFechaEnvioPagare">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="soliFechaRecibidoPagare">Fecha Recibido Pagaré :</label>
+                        <input type="date" class="form-control" id="soliFechaRecibidoPagare" [(ngModel)]="solicitud.soliFechaRecibidoPagare" name="soliFechaRecibidoPagare">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row ">
+                <div id="cajaAprobados" class="col-3 mt-4">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="soliApruebaFormato" [(ngModel)]="solicitud.soliApruebaFormato" name="soliApruebaFormato">
+                        <label class="form-check-label" for="soliApruebaFormato">
+                                Formato
+                            </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="soliApruebaListasRestrictivas" [(ngModel)]="solicitud.soliApruebaListasRestrictivas" name="soliApruebaListasRestrictivas">
+                        <label class="form-check-label" for="soliApruebaListasRestrictivas">
+                                Listas Restrictivas
+                            </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="soliApruebaDatacredito" [(ngModel)]="solicitud.soliApruebaDatacredito" name="soliApruebaDatacredito">
+                        <label class="form-check-label" for="soliApruebaDatacredito">
+                                Datacredito
+                            </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="soliApruebaCartera" [(ngModel)]="solicitud.soliApruebaCartera" name="soliApruebaCartera">
+                        <label class="form-check-label" for="soliApruebaCartera">
+                                Cartera
+                            </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="soliApruebaReferencias" [(ngModel)]="solicitud.soliApruebaReferencias" name="soliApruebaReferencias">
+                        <label class="form-check-label" for="soliApruebaReferencias">
+                                Referencias
+                            </label>
+                    </div>
+                </div>
+                <div class="col-9">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="idEstado">Estado :</label>
+                                <select class="form-control" id="IdEstado" [(ngModel)]="solicitud.IdEstado" name="IdEstado" required>
+                                    <option *ngFor="let item of estados" [value]="item.estadoId" selected>{{item.nombreEstado}}</option>
+                                </select>
+                                <small *ngIf="s.submitted && s.controls['IdEstado'].errors" id="emailHelp" class="form-text text-danger animated fadeIn">**Debe escoger un estado</small>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="idCausal">Causal :</label>
+                                <select class="form-control" id="IdCausal" [(ngModel)]="solicitud.IdCausal" name="IdCausal" required>
+                                    <option *ngFor="let item of causales" [value]="item.causalId" selected>{{item.nombreCausal}}</option>
+                                </select>
+                                <small *ngIf="s.submitted && s.controls['IdCausal'].errors" id="emailHelp" class="form-text text-danger animated fadeIn">**Debe escoger una causal</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row p-3">
+                        <div class="input-group h-50">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text comentario">Comentarios</span>
+                            </div>
+                            <textarea class="form-control " aria-label="With textarea" id="soliComentarios" [(ngModel)]="solicitud.soliComentarios" name="soliComentarios"></textarea>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,154 @@
+<div class="m-3 formUK">
+    <form (ngSubmit)="onSubmit(c)" #c="ngForm">
+        <div id="contrapartes">
+            <div class="row">
+                <div class="col-11">
+                    <h3>CONTRAPARTES</h3>
+                </div>
+
+                <div class="col-1 p-1">
+                    <button type="submit" class="btn" id="editarContraparte"><img src="../../../assets/img/save.jpg " alt="Actualizar" ></button>
+                    <button type="button" class="btn" id="eliminarContraparte" (click)="eliminaContraparte()"><img src="../../../assets/img/icons8-eliminar-64.png" alt="Borrar" ></button>
+                </div>
+
+            </div>
+            <div class="row">
+
+                <div class="container w-50">
+                    <hr>
+                    <div class="col-12">
+                        <div class="input-group mb-3">
+                            <input [(ngModel)]="termino" name="termino" (blur)="buscarTermino()" type="search" class="form-control" placeholder="Buscar nit o razón social ..." aria-label="Recipient's username" aria-describedby="button-addon2">
+                        </div>
+                    </div>
+                    <div class="p-0" id="ventana" *ngIf="ventana">
+                        <div class="form-group p-0 m-0">
+                            <select *ngIf="regex1" multiple class="form-control" id="exampleFormControlSelect2" size="1">
+                                <option *ngFor="let item of lines" [value]="item.usuaNumeroIdentificacion"  (click)="cargarContraparte(item.usuaNumeroIdentificacion)">{{item.usuaNumeroIdentificacion}} - {{item.usuaRazonSocial}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group p-0 m-0">
+                            <select *ngIf="regex2" multiple class="form-control" id="exampleFormControlSelect2" size="3">
+                                <option *ngFor="let item of lines" [value]="item.usuaNumeroIdentificacion" (click)="cargarContraparte(item.usuaNumeroIdentificacion)" selected>{{item.usuaNumeroIdentificacion}} - {{item.usuaRazonSocial}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <h6>{{this.edades}}</h6>
+                    <hr>
+
+                </div>
+            </div>
+
+            <div class="row" style="z-index: 1;">
+                <div class="col-3">
+                    <div class="form-group">
+                        <label for="contNumeroIdentificacion">Número Identificación :</label>
+                        <input type="text" class="form-control" id="contNumeroIdentificacion" [(ngModel)]="contraparte.contNumeroIdentificacion" name="contNumeroIdentificacion" readonly>
+
+                    </div>
+                </div>
+                <div class="col-9">
+                    <div class="form-group">
+                        <label for="contNombre">Apellidos y Nombres / Razon Social :</label>
+                        <input type="text" class="form-control" id="contNombre" [(ngModel)]="contraparte.contNombre" name="contNombre" readonly>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-3">
+                    <div class="form-group">
+                        <label for="contOrden">Número Orden :</label>
+                        <input type="text" class="form-control" id="contOrden" [(ngModel)]="contraparte.contOrden" name="contOrden" readonly>
+                    </div>
+                </div>
+
+                <div class="col-2">
+                    <div class="form-check form-check-inline p-4 mt-3">
+                        <input class="form-check-input" type="checkbox" id="contPagare" value="option1" [(ngModel)]="contraparte.contPagare" name="contPagare" readonly>
+                        <label class="form-check-label" for="contPagare">Pagare</label>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-check form-check-inline p-4 mt-3">
+                        <input class="form-check-input" type="checkbox" id="contCliente" value="option1" [(ngModel)]="contraparte.contCliente" name="contCliente" readonly>
+                        <label class="form-check-label" for="contCliente">Cliente</label>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-check form-check-inline p-4 mt-3">
+                        <input class="form-check-input" type="checkbox" id="contProveedor" value="option1" [(ngModel)]="contraparte.contProveedor" name="contProveedor" readonly>
+                        <label class="form-check-label" for="contProveedor">Proveedor</label>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-check form-check-inline p-4 mt-3">
+                        <input class="form-check-input" type="checkbox" id="contEmpleado" value="option1" [(ngModel)]="contraparte.contEmpleado" name="contEmpleado" readonly>
+                        <label class="form-check-label" for="contEmpleado">Empleado</label>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-3">
+                    <div class="form-group">
+                        <label for="contDepartamentos">Departamento :</label>
+                        <input type="text" class="form-control" id="contDepartamentos" [(ngModel)]="contraparte.contDepartamentos" name="contDepartamentos" readonly>
+
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <label for="contMunicipios">Municipio :</label>
+                        <input type="text" class="form-control" id="contMunicipios" [(ngModel)]="contraparte.contMunicipios" name="contMunicipios" readonly>
+
+                    </div>
+                </div>
+                <div class="col-6">
+
+                    <div class="form-group">
+                        <label for="contEmail">email :</label>
+                        <input type="text" class="form-control" id="contEmail" [(ngModel)]="contraparte.contEmail" name="contEmail" readonly>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-9">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text comentario">Seguimiento</span>
+                        </div>
+                        <textarea class="form-control" aria-label="With textarea" id="contObservacion" [(ngModel)]="contraparte.contObservacion" name="contObservacion" required></textarea>
+                    </div>
+                </div>
+                <div class="col-1 mt-2">
+                    <div class="btn-group" role="group" aria-label="Third group">
+                        <button type="button" class="btn btn-primary m-1" (click)="cerrarVentana(c)">Vinculos</button>
+                        <button type="button" class="btn btn-primary m-1" (click)="verHistorial(c)">Historial</button>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+        </div>
+
+    </form>
+
+
+
+</div>
+
+
+<div *ngIf="this.ventana2" id="solicitud2" class="p-1">
+
+    <app-table2 [contraparteId]='contraparte.contNumeroIdentificacion'></app-table2>
+
+    <div class="btn-group mt-0 p-0" role="group" aria-label="Third group">
+        <button type="button" class="btn btn-outline-danger" (click)="cerrarVentana(c)">Cerrar Vinculos</button>
+    </div>
+</div>
