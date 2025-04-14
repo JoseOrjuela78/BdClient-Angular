@@ -27,9 +27,9 @@
                         <td>{{item.soliConsecutivo}}</td>
                         <td>{{item.nombreSolicitud}}</td>
                         <td>{{item.nombreEjecutivo}}</td>
-                        <td>{{item.soliCupoActual}}</td>
-                        <td>{{item.soliCupoSolicitado}}</td>
-                        <td>{{item.soliCupoAprobado}}</td>
+                        <td>{{item.soliCupoActual | currency:'$':'symbol':'.0-0'}}</td>
+                        <td>{{item.soliCupoSolicitado | currency:'$':'symbol':'.0-0'}}</td>
+                        <td>{{item.soliCupoAprobado | currency:'$':'symbol':'.0-0'}}</td>
                         <td>{{item.nombreEstado}}</td>
                         <td>{{item.nombreCausal}}</td>
                         <td>

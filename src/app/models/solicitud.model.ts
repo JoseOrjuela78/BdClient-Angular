@@ -25,6 +25,6 @@ export class SolicitudModel {
     soliFechaRecibidoPagare: Date;
     IdEstado: String;
     IdCausal: String;
-    soliComentarios: String;
+    soliComentarios: string;
        
     }

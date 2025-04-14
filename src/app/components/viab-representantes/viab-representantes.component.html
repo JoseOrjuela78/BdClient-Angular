@@ -1,0 +1,62 @@
+<h6>
+    <span> 
+        POR FAVOR INGRESE REPRESENTANTES LEGALES, ACCIONISTAS Y CONTACTOS
+    </span>
+</h6>
+<form (ngSubmit)="upRepViab(v)" #v="ngForm">
+
+
+
+    <div class="row">
+
+        <div class="form-group col-2 ml-2 p-1">
+            <label for="cargoId">Cargo :</label>
+            <select class="form-control" id="cargoId" name="cargoId" [(ngModel)]='repViab.cargoId' required>
+        <option *ngFor="let item of lines2" [value]="item.cargoId">{{item.nombreCargo}}</option>
+        </select>
+
+        </div>
+
+        <div class="form-group col-2 p-1">
+            <label for="tipoIdentificacion">Tipo Identificación :</label>
+            <select class="form-control" id="tipoIdentificacion" name="tipoIdentificacion" [(ngModel)]='repViab.tipoIdentificacion' required>
+        <option *ngFor="let item of lines" [value]="item.tipoId" selected>{{item.tipoDocumento}}</option>
+        </select>
+
+        </div>
+        <div class="form-group col-2 p-1">
+            <label for="reprIdentificacion">Número :</label>
+            <input type="text" class="form-control" id="reprIdentificacion" name="reprIdentificacion" [(ngModel)]='repViab.reprIdentificacion' (blur)="consultarData(v)" required>
+
+        </div>
+
+        <div class="form-group col-4 p-1">
+            <label for="reprNombre">Nombre :</label>
+            <input type="text" class="form-control" id="reprNombre" name="reprNombre" [(ngModel)]='repViab.reprNombre' readonly>
+
+        </div>
+
+
+        <button class="col-1 p-0" type="submit" *ngIf="this.buttons" id="agregarRepresentante" click="upRepViab()"><img src="../../../assets/img/add (1).png" alt="add" srcset="" ></button>
+        <!--<button id="eliminarRepresentante"><img src="../../../assets/img/delete.png" alt="add" srcset=""></button> -->
+
+    </div>
+
+    <div class="row m-1 mt-0">
+        <table class="table table-hover">
+
+            <tbody *ngFor="let item of representantes">
+                <tr>
+                    <td>{{item.nombreCargo}}</td>
+                    <td>{{item.tipoDocumento}}</td>
+                    <td>{{item.reprIdentificacion}}</td>
+                    <td>{{item.reprNombre}}</td>
+                    <td><button type="button" class="btn btn-outline-danger" (click)="eliminarViabRep(item.reprId)">Eliminar</button></td>
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
+    <hr>
+
+</form>

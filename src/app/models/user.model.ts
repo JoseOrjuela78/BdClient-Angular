@@ -3,7 +3,7 @@ export class UserModel {
     escontraparte: Boolean;
     esPEP: Boolean;
     usuaNumeroIdentificacion: String;
-    usuaRazonSocial: String;
+    usuaRazonSocial: string;
     tipoIdentificacion: String;
     usuaFechaMatricula: Date;
     usuaFechaNacimiento: Date;
@@ -16,6 +16,6 @@ export class UserModel {
     departamento: String;
     municipios: String;
     usuaMail: String;
-    usuaObservacion: String;
+    usuaObservacion: string;
        
     }

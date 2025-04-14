@@ -14,6 +14,8 @@ import { EstadosModel } from '../models/estados.model';
 import { PaisesModel } from '../models/paises.model';
 import { DepartamentosModel } from '../models/departamentos.model';
 import { MunicipiosModel } from '../models/municipios.model';
+import { ViabilidadModel } from '../models/viabilidad.model';
+import { viabRepresentanteModel } from '../models/viabRepresentante.model ';
 
 
 @Injectable({
@@ -21,8 +23,8 @@ import { MunicipiosModel } from '../models/municipios.model';
 })
 export class UserService {
 
-  //private url: string = ''; 
-  private url: string = 'http://localhost:3000';
+  private url: string = ''; 
+  //private url: string = 'http://localhost:3000';
   userToken: String;
   headers: any;
   
@@ -31,6 +33,74 @@ export class UserService {
     this.headers = new HttpHeaders({'token':`${this.userToken}`});
     
   }
+
+  actualizarViabilidad(viabilidad: ViabilidadModel){
+  
+  console.log(viabilidad);
+    let json = JSON.stringify(viabilidad);
+    let params = "json="+ json;
+    let headersN = new HttpHeaders({
+    'token':`${this.userToken}`,
+    'Content-Type': "application/x-www-form-urlencoded"
+    });
+    return this.http.put(`${this.url}/viabilidad`,params,{headers:headersN});
+
+
+    }
+
+      
+  eliminarViabRep(id: String){
+
+  return this.http.delete(`${this.url}/viabRepresentante/${id}`,{headers:this.headers});
+
+ }
+ 
+
+  obtenerViabRepConsecutivo(consecutivo:String){
+    return this.http.get(`${this.url}/viabRepresentante/${consecutivo}`,{headers:this.headers})
+  }
+
+
+  nuevoViabRepresentante(viabRepresentante: viabRepresentanteModel):Observable<any>{
+
+    let json = JSON.stringify(viabRepresentante);
+    let params = "json="+ json;
+    let headersN = new HttpHeaders({
+        'token':`${this.userToken}`,
+        'Content-Type': "application/x-www-form-urlencoded"
+      });
+    return this.http.post(`${this.url}/viabRepresentante`,params,{headers:headersN})
+   
+      
+    };
+
+
+
+  obtenerViabilidadNit(nit:string){
+    return this.http.get(`${this.url}/viabilidad/${nit}`,{headers:this.headers})
+  }
+
+
+
+
+  obtenerCIIU(){
+  
+    return this.http.get(`${this.url}/ciiu`,{headers:this.headers})
+  }
+
+
+  nuevaViabilidad(viabilidad: ViabilidadModel):Observable<any>{
+
+  let json = JSON.stringify(viabilidad);
+  let params = "json="+ json;
+  let headersN = new HttpHeaders({
+      'token':`${this.userToken}`,
+      'Content-Type': "application/x-www-form-urlencoded"
+    });
+  return this.http.post(`${this.url}/viabilidad`,params,{headers:headersN})
+ 
+    
+  };
 
 
   nuevoCompliance(user: UserModel):Observable<any>{
@@ -45,6 +115,36 @@ export class UserService {
    
       
     };
+
+  nuevoCompliance2(viab: ViabilidadModel):Observable<any>{
+
+      let json = JSON.stringify(viab);
+      let params = "json="+ json;
+      let headersN = new HttpHeaders({
+          'token':`${this.userToken}`,
+          'Content-Type': "application/x-www-form-urlencoded"
+        });
+      return this.http.post(`${this.url}/listas`,params,{headers:headersN})
+     
+        
+      };
+
+  nuevoCompliance3(repViab: viabRepresentanteModel):Observable<any>{
+
+        let json = JSON.stringify(repViab);
+        let params = "json="+ json;
+        let headersN = new HttpHeaders({
+            'token':`${this.userToken}`,
+            'Content-Type': "application/x-www-form-urlencoded"
+          });
+        return this.http.post(`${this.url}/listas`,params,{headers:headersN})
+       
+          
+        };
+
+
+
+
 
 
 obtenerTiposIdentificacion(){
@@ -229,6 +329,7 @@ eliminarUser(user: UserModel){
 
      return this.http.delete(`${this.url}/user/${user.usuaNumeroIdentificacion}`,{headers:this.headers});
     }
+
 nuevoContraparte(user: UserModel):Observable<any>{
 
       let json = JSON.stringify(user);

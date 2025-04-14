@@ -46,6 +46,7 @@ export class ConsultasComponent implements OnInit {
   }
   
   obtenerListaSolicitudes(idEstado:string,){
+    this.solicitudes = [];
     this.userSeven.obtenerSolicitudesConsulta(idEstado).subscribe((resp:any)=>{
        if(resp.solicitudes.length === 0){
         this.lector = false;
@@ -186,7 +187,7 @@ buscarSolicitudEstado(form: NgForm){
 downloadSolicitudesEst() {
   this.fileService.downloadFileSolEst(this.idEstado).subscribe(response => {
     
-    let blob:any = new Blob([response.blob()], { type: 'text/json; charset=utf-8' });
+    let blob:any = new Blob([response], { type: 'text/json; charset=utf-8' });
     const url= window.URL.createObjectURL(blob);
     window.open(url);
     fileSaver.saveAs(blob, 'SolicitdesEstado.txt');

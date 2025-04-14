@@ -17,7 +17,7 @@ export class DownloadComponent {
   downloadSolicitudes() {
     this.fileService.downloadFile().subscribe(response => {
       
-      let blob:any = new Blob([response.blob()], { type: 'text/json; charset=utf-8' });
+      let blob:any = new Blob([response], { type: 'text/json; charset=utf-8' });
       const url= window.URL.createObjectURL(blob);
 			window.open(url);
       fileSaver.saveAs(blob, 'Solicitudes.txt');
@@ -29,7 +29,7 @@ export class DownloadComponent {
   downloadRepresentantes() {
     this.fileService.downloadFileRep().subscribe(response => {
       
-      let blob:any = new Blob([response.blob()], { type: 'text/json; charset=utf-8' });
+      let blob:any = new Blob([response], { type: 'text/json; charset=utf-8' });
       const url= window.URL.createObjectURL(blob);
 			window.open(url);
       fileSaver.saveAs(blob, 'Representantes.txt');
@@ -41,7 +41,7 @@ export class DownloadComponent {
   downloadUsers() {
     this.fileService.downloadFileUsers().subscribe(response => {
       
-      let blob:any = new Blob([response.blob()], { type: 'text/json; charset=utf-8' });
+      let blob:any = new Blob([response], { type: 'text/json; charset=utf-8' });
       const url= window.URL.createObjectURL(blob);
 			window.open(url);
       fileSaver.saveAs(blob, 'Users.txt');
@@ -53,7 +53,7 @@ export class DownloadComponent {
   downloadContrapartes() {
     this.fileService.downloadFileContrapartes().subscribe(response => {
       
-      let blob:any = new Blob([response.blob()], { type: 'text/json; charset=utf-8' });
+      let blob:any = new Blob([response], { type: 'text/json; charset=utf-8' });
       const url= window.URL.createObjectURL(blob);
 			window.open(url);
       fileSaver.saveAs(blob, 'Contrapartes.txt');

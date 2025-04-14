@@ -20,6 +20,7 @@ import { TiposIdentificacionComponent } from './components/tipos-identificacion/
 import { TiposSolicitudComponent } from './components/tipos-solicitud/tipos-solicitud.component';
 import { CargaMasivaComponent } from './components/carga-masiva/carga-masiva.component';
 import { CiudadesComponent } from './components/ciudades/ciudades.component';
+import { ViabilidadComponent } from './components/viabilidad/viabilidad.component';
 
 
 const routes: Routes = [
@@ -45,6 +46,7 @@ const routes: Routes = [
   {path: 'tabla', component: TableComponent},
   
   {path: 'consultas', component: ConsultasComponent},
+  {path: 'viabilidad', component: ViabilidadComponent},
   {path: 'download', component: DownloadComponent},
    ]},
 

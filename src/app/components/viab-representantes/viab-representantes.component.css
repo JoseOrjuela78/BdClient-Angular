@@ -1,0 +1,13 @@
+img {
+    padding: 1px;
+    margin: 1px;
+    width: 30%;
+}
+
+#agregarRepresentante {
+    margin-top: 30px;
+    border: white;
+    background-color: #F8F8FF;
+    height: 50px;
+    width: 5px;
+}

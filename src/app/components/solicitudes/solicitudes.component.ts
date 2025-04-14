@@ -80,11 +80,17 @@ export class SolicitudesComponent implements OnInit {
 
 
 
+ async solicitudUp(form: NgForm){
+    
+   
 
+    this.solicitud.contNumeroIdentificacion = this.contraparteId;
+    let str = this.solicitud.soliComentarios || 'Sin comentarios';
+    this.solicitud.soliComentarios = await encodeURIComponent(str.toUpperCase());
 
-  solicitudUp(form: NgForm){
     if(form.invalid){return;}
 
+          
     Swal.fire({
       allowOutsideClick: false,
       icon: 'info',
@@ -92,13 +98,8 @@ export class SolicitudesComponent implements OnInit {
             
     });
     Swal.showLoading()
-
-    this.solicitud.contNumeroIdentificacion = this.contraparteId;
-    let str = this.solicitud.soliComentarios;
-    this.solicitud.soliComentarios = this.encodedSTR(str.toUpperCase());
     
-     
-    this.userSix.nuevaSolicitud(this.solicitud).subscribe((resp:any)=>{
+   await this.userSix.nuevaSolicitud(this.solicitud).subscribe((resp:any)=>{
  
     this.cargarSolicitud(resp.solicitud.soliConsecutivo);
       
@@ -121,8 +122,14 @@ export class SolicitudesComponent implements OnInit {
   }
 
 
-actualizaSolicitud(form: NgForm){
-  if(form.invalid){return;}
+async actualizaSolicitud(form: NgForm){
+
+  let str = this.solicitud.soliComentarios || 'Sin comentarios';
+  
+  this.solicitud.soliComentarios = await encodeURIComponent(str.toUpperCase());
+ 
+   if(form.invalid){return;}
+
   Swal.fire({
     allowOutsideClick: false,
     icon: 'info',
@@ -130,13 +137,8 @@ actualizaSolicitud(form: NgForm){
           
   });
   Swal.showLoading()
-
-  let str = this.solicitud.soliComentarios;
-  this.solicitud.soliComentarios = this.encodedSTR(str.toUpperCase());
-
   
-
-  this.userSix.actualizarSolicitud(this.solicitud).subscribe((resp:any)=>{
+ await this.userSix.actualizarSolicitud(this.solicitud).subscribe((resp:any)=>{
 
   this.cargarSolicitud(this.consecutivo);
   
@@ -171,19 +173,19 @@ cargarSolicitud(solicitudId: string){
     this.solicitud.soliConsecutivo = resp.solicitud.soliConsecutivo
     this.solicitud.IdEjecutivo = resp.solicitud.ejecutivoId;
     this.solicitud.IdSolicitud = resp.solicitud.tipoSolicitudId;
-    this.now =moment(resp.solicitud.soliFechaExpedicionCcio).format('YYYY-MM-DD');
+    this.now =moment(resp.solicitud.soliFechaExpedicionCcio).add(1, 'days').format('YYYY-MM-DD');
     this.solicitud.soliFechaExpedicionCcio = this.now;
     this.solicitud.soliCupoActual = resp.solicitud.soliCupoActual;
     this.solicitud.soliCupoSolicitado = resp.solicitud.soliCupoSolicitado;
-    this.now =moment(resp.solicitud.soliFechaRadicacion).format('YYYY-MM-DD');
+    this.now =moment(resp.solicitud.soliFechaRadicacion).add(1, 'days').format('YYYY-MM-DD');
     this.solicitud.soliFechaRadicacion = this.now;
-    this.now =moment(resp.solicitud.soliFechaSolucion).format('YYYY-MM-DD');
+    this.now =moment(resp.solicitud.soliFechaSolucion).add(1, 'days').format('YYYY-MM-DD');
     this.solicitud.soliFechaSolucion = this.now;
     this.solicitud.soliCupoAprobado = resp.solicitud.soliCupoAprobado;
     this.solicitud.soliCupoAsignado = resp.solicitud.soliCupoAsignado;
-    this.now =moment(resp.solicitud.soliFechaEnvioPagare).format('YYYY-MM-DD');
+    this.now =moment(resp.solicitud.soliFechaEnvioPagare).add(1, 'days').format('YYYY-MM-DD');
     this.solicitud.soliFechaEnvioPagare = this.now;
-    this.now =moment(resp.solicitud.soliFechaRecibidoPagare).format('YYYY-MM-DD');
+    this.now =moment(resp.solicitud.soliFechaRecibidoPagare).add(1, 'days').format('YYYY-MM-DD');
     this.solicitud.soliFechaRecibidoPagare = this.now;
     this.solicitud.IdEstado = resp.solicitud.estadoId;
     this.solicitud.IdCausal = resp.solicitud.causalId;
@@ -198,31 +200,7 @@ cargarSolicitud(solicitudId: string){
 
 
 
-
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 encodedSTR (str:string) {

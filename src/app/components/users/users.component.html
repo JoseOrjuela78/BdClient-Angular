@@ -48,6 +48,7 @@
 
                 <div class="col-2" id="compliance">
                     <button (click)="compliance()" type="button" class="btn" id="compliancebtn"><img src="../../../assets/img/Compliance.PNG" alt="Listas"></button>
+
                 </div>
 
             </div>
@@ -178,6 +179,14 @@
                 <div class="col-2 mt-2">
                     <div class="btn-group " role="group" aria-label="Third group">
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" (click)="cerrarVentana(h)">Vinculos</button>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="ml-3 mt-2" *ngIf="this.buttomCompliance">
+                    <div class="btn-group " role="group" aria-label="Third group">
+                        <button type="button" class="btn btn-outline-danger" data-target="#exampleModalCenter" (click)="downloadCompliance(this.dataCompliance)">{{this.nameFile}}</button>
                     </div>
                 </div>
             </div>

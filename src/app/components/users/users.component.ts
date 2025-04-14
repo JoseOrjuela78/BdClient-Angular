@@ -3,7 +3,10 @@ import Swal from 'sweetalert2';
 import { UserModel } from '../../models/user.model';
 import { NgForm } from '@angular/forms';
 import { UserService } from '../../services/user.service';
+import { FileService } from '../../services/file.service';
+import * as fileSaver from 'file-saver';
 import * as moment from 'moment';
+import { async } from '@angular/core/testing';
 
 
 
@@ -24,17 +27,24 @@ export class UsersComponent implements OnInit {
   totalSolicitudes: Number;
   totalRepresentantes: Number;
   ventana: Boolean = false;
+  dataCompliance:any ={};
+  nameFile:String;
+  buttomCompliance: Boolean = false;
+
   
 
   @Input() nit: String;
 
-  constructor(private userOne: UserService) { 
+  constructor(private userOne: UserService,  private fileService: FileService) { 
     
   }
 
   ngOnInit() {
 
+    this.buttomCompliance = false;
+
     this.today = moment().format('YYYY-MM-DD');
+   
     
     
     if(localStorage.getItem('idUser')){
@@ -49,8 +59,7 @@ export class UsersComponent implements OnInit {
     }
 
      this.user = new UserModel();
-     
-    
+        
      // obtener tipos de documentos
      this.userOne.obtenerTiposIdentificacion().subscribe((resp:any) =>{
       this.lines = resp.tiposIdentificacion;
@@ -60,7 +69,7 @@ export class UsersComponent implements OnInit {
         this.dptos = resp.departamentos;
       })
 
-    
+         
 
   }
 
@@ -75,10 +84,14 @@ export class UsersComponent implements OnInit {
     Swal.showLoading()
 
     
-    let str1 = this.user.usuaObservacion;
+    this.user.usuaRazonSocial = "";
     this.user.usuaObservacion = "";
     this.userOne.nuevoCompliance(this.user).subscribe((resp:any) =>{
-     console.log(resp);
+    
+    this.dataCompliance = resp.data;
+    this.nameFile =`${resp.data.idConsulta} ${resp.data.nombre} id_${resp.data.datoConsultado}`;
+    this.buttomCompliance = true;
+    
 
     if(resp.resultado.presentaRiesgo === undefined){
       
@@ -94,7 +107,7 @@ export class UsersComponent implements OnInit {
      }else if (resp.resultado.presentaRiesgo){
       
       this.user.usuaRazonSocial = resp.resultado.nombre;
-      this.user.usuaObservacion = str1 + resp.resultado.resultados;
+      this.user.usuaObservacion = `id: ${resp.data.idConsulta} ${resp.resultado.resultados}`;
 
       Swal.fire({
   
@@ -107,7 +120,7 @@ export class UsersComponent implements OnInit {
      }else {
              
       this.user.usuaRazonSocial = resp.resultado.nombre;
-      this.user.usuaObservacion = str1 + " Usuario no presenta riesgo";
+      this.user.usuaObservacion = `id: ${resp.data.idConsulta} Usuario no presenta riesgo`;
 
       Swal.fire({
   
@@ -157,66 +170,39 @@ export class UsersComponent implements OnInit {
 
   userUp(form:NgForm){
     
-    if(form.invalid){return;}
-
-    Swal.fire({
-      allowOutsideClick: false,
-      icon: 'info',
-      text:'Espere por favor...'
-            
-    });
-    Swal.showLoading()
     
-    
-    let str = this.user.usuaRazonSocial;
-    this.user.usuaRazonSocial = this.encodedSTR(str.toUpperCase());
-    str = this.user.usuaObservacion;
-    this.user.usuaObservacion = this.encodedSTR(str.toUpperCase());
-
 if(this.user.usuaFechaMatricula === null && this.user.usuaFechaNacimiento === null){
 
   this.user.usuaFechaMatricula = this.today;
   this.user.usuaFechaNacimiento = this.today;
-
-  
-} else if (this.user.usuaFechaMatricula === null){
-
-  this.user.usuaFechaMatricula = this.user.usuaFechaNacimiento;
-  
-} else {
-
-  this.user.usuaFechaNacimiento = this.user.usuaFechaMatricula;
   
 }
 
+if (this.user.usuaFechaMatricula === null || this.user.usuaFechaNacimiento === null){
 
-        
-    this.userOne.nuevoUser(this.user).subscribe(resp=>{
-    
-    this.obtenerUser(this.user.usuaNumeroIdentificacion);
-     
-    localStorage.setItem('idUser', resp.userDB.recordset[0].usuaNumeroIdentificacion);
-      Swal.close();
+  this.user.usuaFechaMatricula = this.user.usuaFechaNacimiento;
+  
+} 
 
-      return this.estadoUser = true;
+this.validarCreateUser(form);
+return;
 
-    },err => {
-      
-       Swal.fire({
-         allowOutsideClick: true,
-         icon: 'error',
-         title: 'Debe Completar Formulario',
-         
-       });
-   });
-    
+
     
   }
 
 
 
-  actualizaUser(form:NgForm){
+ async actualizaUser(form:NgForm){
+    
     if(form.invalid){return;}
+
+    let str = (this.user.usuaRazonSocial).toUpperCase();
+    this.user.usuaRazonSocial = str;
+    let str2 = (this.user.usuaObservacion).toUpperCase();
+    this.user.usuaObservacion = await encodeURIComponent(str2);
+    let rs = await encodeURIComponent(this.user.usuaRazonSocial);
+      this.user.usuaRazonSocial = rs;
 
    Swal.fire({
       allowOutsideClick: false,
@@ -225,28 +211,11 @@ if(this.user.usuaFechaMatricula === null && this.user.usuaFechaNacimiento === nu
             
     });
     Swal.showLoading()
-
-    let str = this.user.usuaRazonSocial;
-    this.user.usuaRazonSocial = this.encodedSTR(str.toUpperCase());
-    str = this.user.usuaObservacion;
-    this.user.usuaObservacion = this.encodedSTR(str.toUpperCase());
-    
-
-    this.userOne.actualizarUser(this.user).subscribe((resp:any)=>{
-      this.obtenerUser(this.user.usuaNumeroIdentificacion);
-    Swal.fire({
-        allowOutsideClick: true,
-        icon: 'info',
-        text: resp.message
-              
-      });
-        
-   
-        return this.estadoUser = true;
+      
+   await this.userOne.actualizarUser(this.user).subscribe((resp:any)=>{
       
      
-     
-    },err => {
+    }/*,err => {
       
        Swal.fire({
          allowOutsideClick: true,
@@ -254,9 +223,21 @@ if(this.user.usuaFechaMatricula === null && this.user.usuaFechaNacimiento === nu
          title: `Error De Actualización: ${err}`,
          
        });
-   });
-    
-    
+   }*/);
+
+  await this.obtenerUser(this.user.usuaNumeroIdentificacion);
+      
+    Swal.fire({
+        allowOutsideClick: true,
+        icon: 'info',
+        text: 'Usuario Actualizado'
+              
+      });
+        
+   
+        return this.estadoUser = true;
+      
+         
   }
 
 
@@ -322,7 +303,7 @@ if(this.user.usuaFechaMatricula === null && this.user.usuaFechaNacimiento === nu
   
 
   contraparteUp(user:UserModel){
-    this.userOne.nuevoContraparte(user).subscribe(resp=>{
+    this.userOne.nuevoContraparte(user).subscribe((resp:any)=>{
       console.log(resp)
     })
   }
@@ -347,7 +328,8 @@ if(this.user.usuaFechaMatricula === null && this.user.usuaFechaNacimiento === nu
   cargarUser(nit:String){
     
     this.userOne.obtenerUser(nit).subscribe((resp:any) =>{
-      
+
+            
       if(this.user.usuaNumeroIdentificacion === ''){
         return;
       }
@@ -361,9 +343,9 @@ if(this.user.usuaFechaMatricula === null && this.user.usuaFechaNacimiento === nu
         this.user.esPEP = resp.user[0].usuaPEP;
         this.user.usuaRazonSocial = resp.user[0].usuaRazonSocial;
         this.user.tipoIdentificacion= resp.user[0].tipoId;
-        this.now =moment(resp.user[0].usuaFechaMatricula).format('YYYY-MM-DD');
+        this.now =moment(resp.user[0].usuaFechaMatricula).add(1,'days').format('YYYY-MM-DD');
         this.user.usuaFechaMatricula = this.now;
-        this.now =moment(resp.user[0].usuaFechaNacimiento).format('YYYY-MM-DD');
+        this.now =moment(resp.user[0].usuaFechaNacimiento).add(1,'days').format('YYYY-MM-DD');
         this.user.usuaFechaNacimiento = this.now;
         this.user.usuaCIIU = resp.user[0].usuaCIIU;
         this.user.usuaOrden = resp.user[0].usuaOrden;
@@ -417,15 +399,70 @@ if(this.user.usuaFechaMatricula === null && this.user.usuaFechaNacimiento === nu
   }
 
 
-  encodedSTR (str:string) {
-    return encodeURIComponent(str).replace('&',escape);
+  downloadCompliance(data:any) {
+
+
+
+this.fileService.downloadFileCompliance(data).subscribe(response => {
+    
+ 
+      let blob:any = new Blob([response], { type: 'text/json; charset=utf-8' });
+      const url= window.URL.createObjectURL(blob);
+			window.open(url);
+      fileSaver.saveAs(blob, `${this.nameFile}`);
+      this.buttomCompliance = false;
+      Swal.close();      
+		}), error => console.log('Error downloading the file'),
+                 () => console.info('File downloaded successfully');
+
+
+
+              
+
+                 
+
+                 
   }
 
 
 
+ async validarCreateUser(form:NgForm) { 
+
+      if(form.invalid){return;}
+
+      this.user.usuaRazonSocial = await encodeURIComponent(this.user.usuaRazonSocial.toUpperCase());
+      this.user.usuaObservacion = await encodeURIComponent(this.user.usuaObservacion.toUpperCase());
+    
+   
+     await this.userOne.nuevoUser(this.user).subscribe((resp:any)=>{
+
+      this.obtenerUser(this.user.usuaNumeroIdentificacion);
+      localStorage.setItem('idUser', resp.userDB.recordset[0].usuaNumeroIdentificacion);
+      Swal.close();
+      return this.estadoUser = true;
+    
+   
+     
+   }/*err => {
+      
+       Swal.fire({
+         allowOutsideClick: true,
+         icon: 'error',
+         title: `error ${err}`
+         
+       });
+   }*/);
+
 
   
+  
+  }
 
+ 
+  encodedSTR (str:string) {
+  return encodeURI(str);  
+    
+  }
  
 
  

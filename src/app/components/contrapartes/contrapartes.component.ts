@@ -37,8 +37,13 @@ ventana2: boolean = false;
 
   cargarContraparte(id:string){
 
+
     this.userTwo.obtenerContraparteId(id).subscribe((resp:any)=>{
+
+     // console.log(resp);
     localStorage.setItem('nitContra', resp.contraparteDB[0][0].contNumeroIdentificacion);
+
+   // console.log(resp.contraparteDB);
     this.matricula =moment( resp.contraparteDB[1][0].usuaFechaMatricula,'YYYYMMDD').fromNow();
     this.nacimiento =moment( resp.contraparteDB[1][0].usuaFechaNacimiento,'YYYYMMDD').fromNow();
     this.edades = `Matricula: ${this.matricula} Edad: ${this.nacimiento}`

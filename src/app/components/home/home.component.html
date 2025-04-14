@@ -25,6 +25,10 @@
             <li class="nav-item" *ngIf="ejecUser=='true'" routerLinkActive="active">
                 <a class="nav-link" routerLink="download">Descargas</a>
             </li>
+
+            <li class="nav-item" *ngIf="ejecUser=='false'" routerLinkActive="active">
+                <a class="nav-link" routerLink="viabilidad">Viabilidad</a>
+            </li>
             <li class="nav-item" routerLinkActive="active">
                 <a class="nav-link" (click)="salir()"><strong>Salir</strong></a>
             </li>

@@ -11,7 +11,7 @@ export class CargaMasivaComponent implements OnInit {
 
   uploadedFiles: Array <File>;
   tipos: String[];
-  tipo: String;
+  tipo: string;
   name: String;
   size: Number;
   lastModified: Date;
@@ -45,16 +45,16 @@ export class CargaMasivaComponent implements OnInit {
     let formData = new FormData();
     for(let i=0; i < this.uploadedFiles.length; i++){
     
-      formData.append("archivo", this.uploadedFiles[i], this.uploadedFiles[i].name);
+      formData.append("file", this.uploadedFiles[i], this.uploadedFiles[i].name);
 
     }
 
-    this.fileservice.uploadFileTablas(this.tipo,formData).subscribe((resp:any)=>{
-      let m = JSON.parse(resp._body)
+    this.fileservice.uploadFileTablas(formData).subscribe((resp:any)=>{
+      let m = resp.data
       Swal.fire({
       allowOutsideClick: false,
       icon: 'info',
-      text:`${m.total} ${m.message}...`
+      text:`${m.originalname} ${m.encoding} Saved...`
             
     });
 
