@@ -1,0 +1,11 @@
+.viabilidad {
+    text-align: center;
+}
+
+.fondoViabilidad {
+    padding: 5px;
+    background-color: darkslateblue;
+    border-radius: 5px;
+    color: oldlace;
+    font-weight: bold;
+}

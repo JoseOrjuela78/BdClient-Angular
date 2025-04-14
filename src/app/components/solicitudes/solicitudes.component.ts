@@ -80,9 +80,13 @@ export class SolicitudesComponent implements OnInit {
 
 
 
-
-
   solicitudUp(form: NgForm){
+    
+
+    this.solicitud.contNumeroIdentificacion = this.contraparteId;
+    let str = this.solicitud.soliComentarios || 'Sin comentarios';
+    this.solicitud.soliComentarios = str.toUpperCase();
+    
     if(form.invalid){return;}
 
     Swal.fire({
@@ -92,12 +96,8 @@ export class SolicitudesComponent implements OnInit {
             
     });
     Swal.showLoading()
-
-    this.solicitud.contNumeroIdentificacion = this.contraparteId;
-    let str = this.solicitud.soliComentarios;
-    this.solicitud.soliComentarios = this.encodedSTR(str.toUpperCase());
     
-     
+    
     this.userSix.nuevaSolicitud(this.solicitud).subscribe((resp:any)=>{
  
     this.cargarSolicitud(resp.solicitud.soliConsecutivo);
@@ -122,6 +122,11 @@ export class SolicitudesComponent implements OnInit {
 
 
 actualizaSolicitud(form: NgForm){
+ 
+
+  let str = (this.solicitud.soliComentarios || 'Sin comentarios').toUpperCase();
+  this.solicitud.soliComentarios = str;
+
   if(form.invalid){return;}
   Swal.fire({
     allowOutsideClick: false,
@@ -130,10 +135,6 @@ actualizaSolicitud(form: NgForm){
           
   });
   Swal.showLoading()
-
-  let str = this.solicitud.soliComentarios;
-  this.solicitud.soliComentarios = this.encodedSTR(str.toUpperCase());
-
   
 
   this.userSix.actualizarSolicitud(this.solicitud).subscribe((resp:any)=>{
@@ -198,36 +199,10 @@ cargarSolicitud(solicitudId: string){
 
 
 
-
-
-
 }
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-encodedSTR (str:string) {
-  return encodeURIComponent(str).replace('&',escape);
-}
 
 
 }

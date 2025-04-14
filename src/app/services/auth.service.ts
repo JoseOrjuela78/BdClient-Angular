@@ -10,8 +10,8 @@ import { map } from 'rxjs/operators';
 })
 export class AuthService {
 
-//private url: string = ''; //'http://localhost:3000';
-private url: string = 'http://localhost:3000';
+private url: string = ''; //'http://localhost:3000';
+//private url: string = 'http://localhost:3000';
  userToken: string;
  headers: any;
  
@@ -42,6 +42,7 @@ login(usuario:UsuarioModel):Observable<any>{
   return this.http.post(`${this.url}/login`,params,{headers:headers})
   .pipe(map(resp =>{
     this.guardarToken(resp['token'])
+    localStorage.setItem('nombreUsuario',resp['usuario'].nombre)
     return resp;
   }))
     

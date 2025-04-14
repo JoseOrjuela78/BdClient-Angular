@@ -85,8 +85,7 @@ export class Table2Component implements OnInit {
 
   downloadRepresentantesCon(nit: string) {
     this.fileService.downloadFileRepCon(nit).subscribe(response => {
-      
-      let blob:any = new Blob([response.blob()], { type: 'text/json; charset=utf-8' });
+      let blob:any = new Blob([response], { type: 'text/json; charset=utf-8' });
       const url= window.URL.createObjectURL(blob);
 			window.open(url);
       fileSaver.saveAs(blob, 'RepresentantesCon.txt');

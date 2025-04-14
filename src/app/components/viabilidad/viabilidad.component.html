@@ -1,0 +1,134 @@
+<div class="m-3 formUK">
+    <h5>*** BIENVENIDO {{this.nombreUsuario | uppercase}} </h5>
+
+
+    <form (ngSubmit)="sumit(v)" #v="ngForm">
+
+        <hr>
+
+
+        <div *ngIf="this.addDatosPrincipales">
+            <h6>
+                <span> 
+                    POR FAVOR INGRESE LOS SIGUENTES DATOS PARA SOLICITAR VIABILIDAD: 
+                </span>
+            </h6>
+
+            <div class="row">
+                <div class="col-3">
+                    <div class="form-group">
+                        <label for="viabNumeroIdentificacion">Número Identificación :</label>
+                        <input type="text" class="form-control" id="viabNumeroIdentificacion" [(ngModel)]="viab.viabNumeroIdentificacion" name="viabNumeroIdentificacion" (blur)="getViabilidad()" required>
+                        <small *ngIf="v.submitted && v.controls['viabNumeroIdentificacion'].status === 'INVALID'" id="emailHelp" class="form-text text-danger animated fadeIn">*** Debe digitar un numero de documento</small>
+                    </div>
+
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <label for="tipoIdentificacion">Tipo Identificación :</label>
+                        <select class="form-control" id="tipoIdentificacion" [(ngModel)]="viab.tipoIdentificacion" name="tipoIdentificacion" required>
+                  <option *ngFor="let item of lines" [value]="item.tipoId" selected>{{item.tipoDocumento}}</option>  
+            </select>
+                        <small *ngIf="v.submitted && v.controls['tipoIdentificacion'].status === 'INVALID'" id="emailHelp" class="form-text text-danger animated fadeIn">*** Debe elegir un tipo Documento</small>
+                    </div>
+
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <label for="viabFechaMatricula">Fecha Matricula :</label>
+                        <input type="date" class="form-control" id="viabFechaMatricula" [(ngModel)]="viab.viabFechaMatricula" name="viabFechaMatricula" required>
+                        <small>Si no aplica asignar fecha actual.</small>
+                        <small *ngIf="v.submitted && v.controls['viabFechaMatricula'].status === 'INVALID'" id="emailHelp" class="form-text text-danger animated fadeIn">*** Debe digitar fecha matricula</small>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <label for="viabAnoRenovado">Año Renovado :</label>
+                        <input type="number" class="form-control" id="viabAnoRenovado" [(ngModel)]="viab.viabAnoRenovado" name="viabAnoRenovado" required>
+                        <small>Si no aplica valor por defecto</small>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="row col-12 ml-1">
+                    <div class="form-group">
+                        <label for="viabCIIU">CIIU :</label>
+                        <select class="form-control" id="viabCIIU" [(ngModel)]="viab.viabCIIU" name="viabCIIU" required>
+                          <option *ngFor="let item of ciiu" [value]="item.ciiu" selected>{{item.code}} - {{item.ciiuDescripcion}}</option>
+                    </select>
+                        <small>CIIU número de actividad economica principal del rut.</small>
+                        <small *ngIf="v.submitted && v.controls['viabCIIU'].status === 'INVALID'" id="emailHelp" class="form-text text-danger animated fadeIn">*** Debe elegir una actividad economica</small>
+                    </div>
+
+                </div>
+
+
+
+
+
+            </div>
+        </div>
+
+
+
+
+        <div *ngIf="this.addRepresentantes">
+            <hr>
+
+            <app-viab-representantes [viabConsecutivo]='viab.viabConsecutivo' [viabNumeroIdentificacion]='viab.viabNumeroIdentificacion'></app-viab-representantes>
+        </div>
+
+        <!--resultados de la viabilidad-->
+
+        <div *ngIf="this.activarViabilidad">
+
+            <div class="fondoViabilidad">
+
+                <div class="row">
+
+                    <div>
+
+                        <h2 class="viabilidad p-5">{{viab.viabFecha | date:'MMMM d, y'}} viabilidad #: {{viab.viabConsecutivo}}</h2>
+
+                    </div>
+                </div>
+                <hr>
+
+                <div class="row">
+
+                    <div *ngIf="!viab.viabExisteEpicor" class="viabilidad p-3">
+                        <h2>{{viab.viabRazonSocial}} no esta creado en epicor {{viab.viabComentariosViabilidad | lowercase}}</h2>
+
+                    </div>
+                    <div *ngIf="viab.viabExisteEpicor" class="viabilidad p-5">
+
+                        <h2>{{viab.viabRazonSocial}} {{viab.viabComentariosViabilidad | lowercase}} reporta cupo por un valor de {{viab.viabCupoAsignado | currency:'$':'symbol':'.0-0'}} a cargo de ejecutivo comercial {{viab.viabResponsableEpicor}}. </h2>
+
+                    </div>
+
+                </div>
+
+                <hr>
+
+            </div>
+
+
+        </div>
+
+        <div class="col-12">
+
+            <button *ngIf="this.buttom" type="submit" class="btn btn-primary btn-sm" id="guardarUsuario">Consultar</button>
+            <button *ngIf="this.buttom2" type="button" class="btn btn-warning btn-sm" id="guardarUsuario" (click)=" actualizarViabilidad()">Revisar</button>
+            <button *ngIf="!this.buttom" type="button" class="btn btn-secondary btn-sm  ml-1" (click)="resetViab()">Nueva Consulta</button>
+
+        </div>
+
+
+
+
+    </form>
+
+</div>

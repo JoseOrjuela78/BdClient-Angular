@@ -40,6 +40,7 @@ ejecUser: string;
 
 
     this.auth.login(this.usuario).subscribe(resp=>{
+
   
     if(!resp.ok){
     Swal.fire({
